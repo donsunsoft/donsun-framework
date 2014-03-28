@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="mybatisCache">
+
+    <diskStore path="java.io.tmpdir/ehcache/mybatis" />
+
+    <!-- DefaultCache setting. -->
+    <defaultCache maxEntriesLocalHeap="10000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="600"
+        overflowToDisk="false" maxEntriesLocalDisk="100000" />
+
+    <cache name="simpleCache" maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="180"
+        overflowToDisk="false">
+    </cache>
+
+    <cache name="shortLivedCache" maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="2" timeToLiveSeconds="4"
+        overflowToDisk="false">
+    </cache>
+
+</ehcache>

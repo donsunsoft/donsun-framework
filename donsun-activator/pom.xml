@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>info.donsun</groupId>
+		<artifactId>donsunframework</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>donsun-activator</artifactId>
+	<packaging>jar</packaging>
+
+	<name>donsun-activator</name>
+	<url>http://www.donsun.info</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>info.donsun</groupId>
+			<artifactId>donsun-core</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+	</dependencies>
+</project>

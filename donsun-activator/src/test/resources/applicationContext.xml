@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application id="test" name="测试工程" version="2.4.0" baseUrl="D:\Temp\fromurl"
+	rootDir="%java.io.tmpdir%/donsunsoft">
+	<properties>
+		<property name="extension.dir" value="exts" />
+		<property name="modules.dir" value="mods" />
+	</properties>
+	<extension>
+		<resources>
+			<resource location="\dll\abc.dll" checksum="d41d8cd98f00b204e9800998ecf8427e" />
+		</resources>
+		<entries>
+			<entry>
+				<name>test2-0.0.1</name>
+				<version>SNAPSHOT</version>
+				<checksum>bbe4fd42e2a17ec19ff767ca79826e1d</checksum>
+			</entry>
+		</entries>
+	</extension>
+	<modules>
+		<module name="pros">
+			<resources>
+				<resource location="\lang\messages2_zh_CN.properties"
+					checksum="2efa1294938605fabd10aafba65ad980" />
+				<resource location="\message1.properties" checksum="88663672d0001c65495a031c7d82294c" />
+				<resource location="\lang\messages2_en.properties"
+					checksum="8bebff1230627929fff627209c009067" />
+			</resources>
+			<config>\META-INF\spring\test-config.xml</config>
+			<entries>
+				<entry>
+					<name>test-0.0.1</name>
+					<version>SNAPSHOT</version>
+					<checksum>9959dfec037f67f5cd5cf53da371ad45</checksum>
+				</entry>
+			</entries>
+		</module>
+	</modules>
+</application>

@@ -1,0 +1,1 @@
+{"app_options":[{"id":1,"description":"软件名称","active":true,"option_key":"app_name","option_value":"互刷精灵"},{"id":2,"description":"每个IP最多注册账号数","active":true,"option_key":"max_register_count","option_value":"4444444"},{"id":3,"description":"测试时间","active":true,"option_key":"create_time","option_value":"2013-12-11 12:22:22"},{"id":4,"active":true,"option_key":"sa"}]}

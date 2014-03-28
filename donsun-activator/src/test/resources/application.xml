@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application id="test" name="测试工程" version="2.4.0"
+	baseUrl="D:\Temp\fromurl" rootDir="%java.io.tmpdir%/donsunsoft">
+	<properties>
+		<property name="modules.dir" value="mods" />
+		<property name="extension.dir" value="exts" />
+		<property name="clean.unusable" value="true" />
+		<property name="main.class" value="foo.App" />
+		<property name="execute.method" value="go" />
+	</properties>
+	<modules>
+		<module name="pros">
+			<config>
+				classpath:META-INF/spring/test-config.xml,
+				test-config1.xml
+			</config>
+			<resources>
+				<resource location="lang/messages2_en.properties" />
+				<resource location="lang/messages2_zh_CN.properties" />
+			</resources>
+			<entries>
+				<entry>
+					<name>test</name>
+					<version>0.0.1-SNAPSHOT</version>
+					<checksum>da90d1d01759620ca520dec4e97d990f</checksum>
+				</entry>
+			</entries>
+		</module>
+	</modules>
+</application>

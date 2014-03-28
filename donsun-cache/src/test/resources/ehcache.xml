@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="mybatisCache">
+
+    <diskStore path="java.io.tmpdir/ehcache/mybatis" />
+
+<!--     <cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+        properties="peerDiscovery=automatic, multicastGroupAddress=230.0.0.1, multicastGroupPort=4446, timeToLive=32" />
+        
+     <cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory" />
+ -->
+<!--     <cacheManagerPeerProviderFactory  class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory" 
+        properties="peerDiscovery=manual,
+            rmiUrls=//192.168.113.128:40001/Blog"
+    />
+ -->
+<!--     <cacheManagerPeerListenerFactory
+        class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+        properties="hostName=localhost, port=40001,
+            socketTimeoutMillis=2000"/> -->
+
+    <!-- DefaultCache setting. -->
+    <defaultCache maxEntriesLocalHeap="10000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="600"
+        overflowToDisk="false" maxEntriesLocalDisk="100000" />
+
+    <cache name="simpleCache" maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="180"
+        overflowToDisk="false">
+    </cache>
+
+    <cache name="shortLivedCache" maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="2" timeToLiveSeconds="4"
+        overflowToDisk="false">
+    </cache>
+
+<!--     <cache name="simpleCache" maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="180"
+        overflowToDisk="false">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>
+        <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"/>
+    </cache> -->
+
+</ehcache>
