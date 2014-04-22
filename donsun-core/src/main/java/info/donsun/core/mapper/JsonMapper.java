@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -122,6 +123,19 @@ public class JsonMapper {
             throw Exceptions.unchecked(e);
         }
     }
+    
+    public <T> T fromJson(String jsonString, TypeReference<T> typeReference) {
+        if (StringUtils.isEmpty(jsonString)) {
+            return null;
+        }
+
+        try {
+            return (T) mapper.readValue(jsonString, typeReference);
+        } catch (IOException e) {
+            logger.warn("parse json string error:" + jsonString, e);
+            throw Exceptions.unchecked(e);
+        }
+    }
 
     /**
      * 将json字符串转换成树形结构
@@ -197,4 +211,6 @@ public class JsonMapper {
     public ObjectMapper getMapper() {
         return mapper;
     }
+
+
 }

@@ -185,16 +185,14 @@ public class FileCache implements Cache {
      * @throws Exception
      * 
      */
-    public boolean exists(Object key) {
-        synchronized (LOCK) {
-            // 遍历缓存文件
-            for (String fileName : listFileNames()) {
-                if (isCacheFile(key, fileName)) {
-                    return true;
-                }
+    private boolean exists(Object key) {
+        // 遍历缓存文件
+        for (String fileName : listFileNames()) {
+            if (isCacheFile(key, fileName)) {
+                return true;
             }
-            return false;
         }
+        return false;
     }
 
     /**
@@ -251,11 +249,15 @@ public class FileCache implements Cache {
     @Override
     public void clear() throws CacheException {
         synchronized (LOCK) {
-            try {
-                FileUtils.cleanDirectory(new File(config.getDir()));
-            } catch (IOException e) {
-                throw new CacheException("Clean directory " + config.getDir() + " fail.", e);
+            File file = new File(config.getDir());
+            if (file.exists()) {
+                try {
+                    FileUtils.cleanDirectory(file);
+                } catch (IOException e) {
+                    throw new CacheException("Clean directory " + config.getDir() + " fail.", e);
+                }
             }
+
         }
     }
 

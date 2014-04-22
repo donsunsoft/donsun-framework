@@ -2,8 +2,8 @@ package info.donsun.app.webparser;
 
 import info.donsun.jwebsoup.Connection.Cookie;
 import info.donsun.jwebsoup.Connection.Response;
-import info.donsun.jwebsoup.impl.CookieImpl;
 import info.donsun.jwebsoup.JWebsoup;
+import info.donsun.jwebsoup.impl.CookieImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +14,11 @@ import java.util.Map;
 import org.junit.Test;
 
 public class JWebsoupTest {
+    @Test
+    public void testPost() throws IOException{
+       Response r= JWebsoup.connect("http://localhost:9080/service/order/match_logistics_carriers_batch").data("orderIds[]", "7","orderIds[]", "8","logisticCarrier","1","logisticType","2").post();
+    System.out.println(r);
+    }
 
     @Test
     public void testMogujie() throws IOException {

@@ -26,6 +26,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
@@ -97,18 +98,22 @@ public class HttpClientExecutor implements Executor {
         HttpUriRequest httpRequest = null;
         try {
             if (req.method() == HttpMethod.POST) {
-                httpRequest = new HttpPost(req.url().toString());
+                String url = StringUtils.replace(req.url().toString(), "|", "%C07");
+                httpRequest = new HttpPost(url);
                 ((HttpPost) httpRequest).setEntity(generateHttpEntity(req));
 
             } else if (req.method() == HttpMethod.DELETE) {
                 Utils.serialiseRequestUrl(req); // appends query string
-                httpRequest = new HttpDelete(req.url().toString());
+                String url = StringUtils.replace(req.url().toString(), "|", "%C07");
+                httpRequest = new HttpDelete(url);
             } else if (req.method() == HttpMethod.PUT) {
-                httpRequest = new HttpPut(req.url().toString());
+                String url = StringUtils.replace(req.url().toString(), "|", "%C07");
+                httpRequest = new HttpPut(url);
                 ((HttpPut) httpRequest).setEntity(generateHttpEntity(req));
             } else {
                 Utils.serialiseRequestUrl(req); // appends query string
-                httpRequest = new HttpGet(req.url().toString());
+                String url = StringUtils.replace(req.url().toString(), "|", "%C07");
+                httpRequest = new HttpGet(url);
             }
 
             httpRequest.setHeaders(createHeaders(req));

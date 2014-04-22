@@ -46,8 +46,6 @@ public class NativeSwingExecutor implements Executor {
 
     private static final String BLANK_LOCATION = "about:blank";
 
-    private static final String AWT_THREAD_NAME = "java.awt.EventDispatchThread";
-
     static {
         if (!NativeInterface.isInitialized()) {
             NativeSwing.initialize();
@@ -75,7 +73,7 @@ public class NativeSwingExecutor implements Executor {
         final Response response = ResponseImpl.create(request);
 
         // JBrowser must running in AWT thread.
-        if (!Thread.currentThread().getClass().getName().equals(AWT_THREAD_NAME)) {
+        if (!JBrowser.isRunningInAwtThread()) {
             try {
                 SwingUtilities.invokeAndWait(new Runnable() {
                     @Override

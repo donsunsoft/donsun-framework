@@ -58,7 +58,7 @@ public final class Values {
                 return ((Boolean) obj).booleanValue();
             } else {
                 String str = obj.toString().trim();
-                return "Y".equalsIgnoreCase(str) || "TRUE".equalsIgnoreCase(str) || "1".equals(str);
+                return "Y".equalsIgnoreCase(str) || "TRUE".equalsIgnoreCase(str) || "YES".equalsIgnoreCase(str)|| "1".equals(str);
 
             }
         }

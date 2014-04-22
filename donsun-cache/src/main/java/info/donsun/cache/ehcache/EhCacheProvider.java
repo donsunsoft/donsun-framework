@@ -33,7 +33,7 @@ public class EhCacheProvider implements CacheProvider {
     private Map<String, EhCache> cacheManager;
 
     @Override
-    public EhCache buildCache(String name) throws CacheException {
+    public synchronized EhCache buildCache(String name) throws CacheException {
         EhCache ehcache = cacheManager.get(name);
         if (ehcache == null) {
             try {
@@ -44,11 +44,10 @@ public class EhCacheProvider implements CacheProvider {
                     cache = manager.getCache(name);
                     LOG.debug("started EHCache region: " + name);
                 }
-                synchronized (cacheManager) {
-                    ehcache = new EhCache(cache);
-                    cacheManager.put(name, ehcache);
-                    return ehcache;
-                }
+                
+                ehcache = new EhCache(cache);
+                cacheManager.put(name, ehcache);
+                return ehcache;
             } catch (net.sf.ehcache.CacheException e) {
                 throw new CacheException(e);
             }
@@ -57,7 +56,7 @@ public class EhCacheProvider implements CacheProvider {
     }
 
     @Override
-    public void start(String configurationFileName) throws CacheException {
+    public synchronized void start(String configurationFileName) throws CacheException {
         if (manager != null) {
             LOG.warn("Attempt to restart an already started EhCacheProvider. Use sessionFactory.close() "
                     + " between repeated calls to buildSessionFactory. Using previously created EhCacheProvider."
@@ -93,7 +92,7 @@ public class EhCacheProvider implements CacheProvider {
     }
 
     @Override
-    public void stop() {
+    public synchronized void stop() {
         if (manager != null) {
             manager.shutdown();
             manager = null;

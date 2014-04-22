@@ -1,7 +1,7 @@
 package info.donsun.cache.test;
 
 import info.donsun.cache.CacheManager;
-import info.donsun.cache.manager.DefaultCacheManager;
+import info.donsun.cache.DefaultCacheManager;
 
 import org.junit.Before;
 

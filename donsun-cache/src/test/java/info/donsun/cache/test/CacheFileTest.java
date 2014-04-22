@@ -3,8 +3,8 @@ package info.donsun.cache.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import info.donsun.cache.CacheManager;
+import info.donsun.cache.DefaultCacheManager;
 import info.donsun.cache.filecache.FileCacheProvider;
-import info.donsun.cache.manager.DefaultCacheManager;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class CacheFileTest {
 
     @Before
     public void setUp() throws Exception {
-        cache = new DefaultCacheManager(new FileCacheProvider(), "filecache.xml");
+        cache = new DefaultCacheManager(FileCacheProvider.class, "filecache.xml");
     }
 
     @Test

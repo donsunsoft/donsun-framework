@@ -18,18 +18,7 @@ public interface CacheManager {
      * @param key cache key
      * @return the cached object or null
      */
-    Object get(String name, Serializable key);
-
-    /**
-     * get cache class with the give class from cache name by cache key
-     * 
-     * @param <T> any object class
-     * @param clazz class object
-     * @param name cache name
-     * @param key cache key
-     * @return the cached class
-     */
-    <T> T get(Class<T> clazz, String name, Serializable key);
+    <T> T get(String name, Serializable key);
 
     /**
      * set cache value to the cache name with cache key
@@ -61,5 +50,12 @@ public interface CacheManager {
      * @param name
      */
     void clear(String name);
+
+    /**
+     * delete the cache holder
+     * 
+     * @param name
+     */
+    void destroy(String name);
 
 }

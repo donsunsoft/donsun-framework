@@ -29,7 +29,7 @@ public class FileCacheProvider implements CacheProvider {
     private FileCacheManager manager;
 
     @Override
-    public FileCache buildCache(String name) throws CacheException {
+    public synchronized FileCache buildCache(String name) throws CacheException {
         FileCache fileCache = cacheManager.get(name);
         if (fileCache == null) {
 
@@ -40,18 +40,16 @@ public class FileCacheProvider implements CacheProvider {
                 cache = manager.getCache(name);
                 LOG.debug("started FileCache region: " + name);
             }
-            synchronized (cacheManager) {
-                fileCache = new FileCache(cache);
-                cacheManager.put(name, fileCache);
-                return fileCache;
-            }
+            fileCache = new FileCache(cache);
+            cacheManager.put(name, fileCache);
+            return fileCache;
 
         }
         return fileCache;
     }
 
     @Override
-    public void start(String configurationFileName) throws CacheException {
+    public synchronized void start(String configurationFileName) throws CacheException {
         if (manager != null) {
             LOG.warn("Attempt to restart an already started FileCacheProvide");
             return;
@@ -86,7 +84,7 @@ public class FileCacheProvider implements CacheProvider {
     }
 
     @Override
-    public void stop() {
+    public synchronized void stop() {
         if (manager != null) {
             manager.shutdown();
             manager = null;

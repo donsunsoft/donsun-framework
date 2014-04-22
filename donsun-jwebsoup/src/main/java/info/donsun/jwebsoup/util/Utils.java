@@ -43,7 +43,7 @@ public final class Utils {
         if (url == null) {
             return null;
         }
-        return url.replaceAll(" ", "%20");
+        return StringUtils.replace(url, " ", "%20");
     }
 
     public static URL toURL(String url) {

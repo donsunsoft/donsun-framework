@@ -1,14 +1,27 @@
+/*
+ * Copyright (c) 2013, FPX and/or its affiliates. All rights reserved.
+ * Use, Copy is subject to authorized license.
+ */
 package info.donsun.activator.util;
 
+import info.donsun.activator.common.Constants;
 import info.donsun.core.utils.Exceptions;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
 import org.apache.log4j.Logger;
+import org.springframework.util.ResourceUtils;
 
+/**
+ * 类加载工具
+ * 
+ * @author Steven.Deng
+ * @date 2014年3月5日
+ */
 public class ClassLoaderUtils {
 
     private static Logger logger = Logger.getLogger(ClassLoaderUtils.class);
@@ -36,12 +49,37 @@ public class ClassLoaderUtils {
      * @param classLoader
      */
     public static void loadJarFile(File file, ClassLoader classLoader) {
-        try {
-            addURL.invoke(classLoader, new Object[] { file.toURI().toURL() });
-            logger.debug(file.getAbsolutePath() + " loaded.");
-        } catch (Exception e) {
-            logger.error("Invoke addURL method fail.", e);
+        if (file.exists()) {
+            if (file.isFile() && file.getName().toLowerCase().endsWith(Constants.ENTRY_SUFFIEX)) {
+                try {
+                    loadJarFile(file.toURI().toURL(), classLoader);
+                } catch (MalformedURLException e) {
+                    logger.error("Invoke addURL method fail.", e);
+                }
+            } else if (file.isDirectory()) {
+                File[] files = file.listFiles();
+                for (File f : files) {
+                    loadJarFile(f, classLoader);
+                }
+            }
+        }
+    }
 
+    /**
+     * 加载jar文件
+     * 
+     * @param url
+     * @param classLoader
+     */
+    public static void loadJarFile(URL url, ClassLoader classLoader) {
+        if (ResourceUtils.isJarURL(url)) {
+            try {
+                addURL.invoke(classLoader, new Object[] { url });
+                logger.debug(url.toString() + " loaded.");
+            } catch (Exception e) {
+                logger.error("Invoke addURL method fail.", e);
+
+            }
         }
     }
 

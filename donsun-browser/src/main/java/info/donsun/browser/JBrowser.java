@@ -23,6 +23,8 @@ public class JBrowser extends JWebBrowser {
      */
     private static final String PRINT_COOKIE_JS = "return document.cookie;";
 
+    private static final String AWT_THREAD_NAME = "java.awt.EventDispatchThread";
+
     /**
      * cookie选项
      */
@@ -51,6 +53,10 @@ public class JBrowser extends JWebBrowser {
         } catch (IOException e) {
             throw new IllegalStateException("Load js/cookie.js fail.", e);
         }
+    }
+
+    public static boolean isRunningInAwtThread() {
+        return Thread.currentThread().getClass().getName().equals(AWT_THREAD_NAME);
     }
 
     public static JBrowser createBrowser() {
