@@ -74,7 +74,7 @@ public class DefaultCacheManager implements CacheManager {
     private void initCacheProvider(final Class<? extends CacheProvider> cacheProvider, final String configurationFileName) {
         try {
             this.provider = cacheProvider.newInstance();
-            this.provider.start(configurationFileName);
+            this.provider.create(configurationFileName);
 
             LOG.info("Using CacheProvider : " + cacheProvider.getClass().getName());
         } catch (Exception e) {
@@ -131,12 +131,10 @@ public class DefaultCacheManager implements CacheManager {
             getCache(name).clear();
         }
     }
-
+    
     @Override
-    public final void destroy(String name) {
-        if (name != null) {
-            getCache(name).destroy();
-        }
+    public void destroy() {
+        provider.destroy();
     }
 
 }

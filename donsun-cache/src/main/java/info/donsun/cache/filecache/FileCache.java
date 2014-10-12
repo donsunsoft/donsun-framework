@@ -261,15 +261,4 @@ public class FileCache implements Cache {
         }
     }
 
-    @Override
-    public void destroy() throws CacheException {
-        synchronized (LOCK) {
-            try {
-                FileUtils.deleteDirectory(new File(config.getDir()));
-            } catch (IOException e) {
-                throw new CacheException("Delete directory " + config.getDir() + " fail.", e);
-            }
-        }
-    }
-
 }

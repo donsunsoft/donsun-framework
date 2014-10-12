@@ -19,16 +19,17 @@ public interface CacheProvider {
     Cache buildCache(String regionName) throws CacheException;
 
     /**
-     * start cache manager
+     * create cache manager
      * 
      * @param configurationFileName configuration file name
      * @throws CacheException cache exception
      */
-    void start(String configurationFileName) throws CacheException;
-
+    void create(String configurationFileName) throws CacheException;
+    
     /**
-     * stop cache manager
+     * destroy cache manager
+     * 
+     * @throws CacheException
      */
-    void stop();
-
+    void destroy() throws CacheException;
 }

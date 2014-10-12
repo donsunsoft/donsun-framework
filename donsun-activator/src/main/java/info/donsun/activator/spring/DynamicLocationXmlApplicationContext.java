@@ -5,6 +5,7 @@ import info.donsun.activator.util.LoaderUtils;
 import org.springframework.context.support.AbstractXmlApplicationContext;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.util.Assert;
 import org.springframework.util.ResourceUtils;
 
 /**
@@ -30,6 +31,7 @@ public class DynamicLocationXmlApplicationContext extends AbstractXmlApplication
 
     @Override
     public Resource getResource(String location) {
+        Assert.notNull(location, "Location must not be null");
         location = LoaderUtils.getRealPath(location, rootDir);
         if (ResourceUtils.isUrl(location)) {
             return super.getResource(location);

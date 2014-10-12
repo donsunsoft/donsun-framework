@@ -87,16 +87,4 @@ public class EhCache implements Cache {
             throw new CacheException(e);
         }
     }
-
-    @Override
-    public void destroy() throws CacheException {
-        try {
-            cache.getCacheManager().removeCache(cache.getName());
-        } catch (IllegalStateException e) {
-            throw new CacheException(e);
-        } catch (net.sf.ehcache.CacheException e) {
-            throw new CacheException(e);
-        }
-    }
-
 }

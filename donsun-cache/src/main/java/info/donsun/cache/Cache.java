@@ -51,11 +51,4 @@ public interface Cache {
      */
     void clear() throws CacheException;
 
-    /**
-     * destroy this cache
-     * 
-     * @throws CacheException cache exception
-     */
-    void destroy() throws CacheException;
-
 }

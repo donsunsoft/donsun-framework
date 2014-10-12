@@ -50,12 +50,9 @@ public interface CacheManager {
      * @param name
      */
     void clear(String name);
-
+    
     /**
-     * delete the cache holder
-     * 
-     * @param name
+     * destroy all cahces
      */
-    void destroy(String name);
-
+    void destroy();
 }

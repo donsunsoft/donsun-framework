@@ -27,7 +27,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.HierarchicalMessageSource;
@@ -335,12 +334,12 @@ public class DefaultApplicationLoader implements ApplicationLoader, ApplicationC
     private class ConfigLoader {
 
         public void load(final Application application, String[] locations) {
+            AbstractApplicationContext applicationContext = ((AbstractApplicationContext) getApplicationContext());
+            ConfigurableListableBeanFactory beanFactory = applicationContext.getBeanFactory();
 
             DynamicLocationXmlApplicationContext reloadApplicationContext = new DynamicLocationXmlApplicationContext(locations, application.getRootDir());
 
-            // applicationContext.setParent(reloadApplicationContext);
-
-            ConfigurableListableBeanFactory beanFactory = ((AbstractApplicationContext) applicationContext).getBeanFactory();
+            applicationContext.setParent(reloadApplicationContext);
 
             ConfigurableListableBeanFactory reloadBeanFactory = reloadApplicationContext.getBeanFactory();
             beanFactory.setParentBeanFactory(reloadBeanFactory);
@@ -384,8 +383,7 @@ public class DefaultApplicationLoader implements ApplicationLoader, ApplicationC
             File entryFile = LoaderUtils.loadEntry(entryDir, entry, application);
 
             if (entryFile.exists() && entryFile.isFile()) {
-                DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
-                ClassLoaderUtils.loadJarFile(entryFile, beanFactory.getBeanClassLoader());
+                ClassLoaderUtils.loadJarFile(entryFile, applicationContext.getClassLoader());
 
             } else {
                 throw new IOException(String.format("Load res %s fail.", entry.getName()));
@@ -496,7 +494,7 @@ public class DefaultApplicationLoader implements ApplicationLoader, ApplicationC
                     loadListener.onLoad(new LoadEvent(resourceFileName, LoadEvent.RESOURCE, String.format("Loading resource %s...", resourceFileName)));
                 }
 
-                LoaderUtils.checkFile(!StringUtils.isEmpty(dir) ? FileUtils.getFile(resourceDir, dir) : resourceDir, resourceFile, Constants.VAR_REGEX, application);
+                LoaderUtils.checkFile(!StringUtils.isEmpty(dir) ? FileUtils.getFile(resourceDir, dir) : resourceDir, resourceFile, resource.getChecksum(), application);
             }
         }
 

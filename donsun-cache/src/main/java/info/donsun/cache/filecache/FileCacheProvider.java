@@ -49,7 +49,7 @@ public class FileCacheProvider implements CacheProvider {
     }
 
     @Override
-    public synchronized void start(String configurationFileName) throws CacheException {
+    public synchronized void create(String configurationFileName) throws CacheException {
         if (manager != null) {
             LOG.warn("Attempt to restart an already started FileCacheProvide");
             return;
@@ -84,11 +84,15 @@ public class FileCacheProvider implements CacheProvider {
     }
 
     @Override
-    public synchronized void stop() {
-        if (manager != null) {
-            manager.shutdown();
-            manager = null;
+    public synchronized void destroy() throws CacheException {
+        if (cacheManager != null) {
+            cacheManager.clear();
         }
+
+        if (manager != null) {
+            manager.removeAll();
+        }
+
     }
 
 }

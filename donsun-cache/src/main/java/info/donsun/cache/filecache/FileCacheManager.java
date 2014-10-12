@@ -5,13 +5,16 @@ package info.donsun.cache.filecache;
 
 import info.donsun.cache.filecache.config.CacheConfig;
 import info.donsun.cache.filecache.config.FileCacheConfig;
+import info.donsun.core.utils.Collections3;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,11 +148,31 @@ public class FileCacheManager {
         }
     }
 
-    /**
-     * Clear cache
-     */
-    public void shutdown() {
-        caches.clear();
+    public void removeAll() {
+        // delete default dir
+        if (fileCacheConfig.getDefaultDir() != null) {
+            deleteDir(fileCacheConfig.getDefaultDir());
+        }
+
+        List<CacheConfig> configs = fileCacheConfig.getCaches();
+        if (Collections3.isNotEmpty(configs)) {
+            for (CacheConfig config : configs) {
+                if (config.getDir() != null) {
+                    deleteDir(config.getDir());
+                }
+            }
+        }
+    }
+
+    private void deleteDir(String dir) {
+        File file = new File(dir);
+        if (file.exists()) {
+            try {
+                FileUtils.forceDelete(file);
+            } catch (IOException e) {
+                LOG.error(String.format("Delete %s fail", dir), e);
+            }
+        }
     }
 
 }
