@@ -65,8 +65,8 @@ public final class LoaderUtils {
                 FileUtils.copyFile(FileUtils.getFile(application.getBaseUrl(), dir.getPath(), file.getName()), file);
             } else {
                 URL fileUrl = createFileURL(dir, file.getName(), application.getBaseUrl());
-                FileUtils.copyURLToFile(fileUrl, file, Values.getInteger(application.getProperty(PropertyName.CONNECTION_TIMEOUT), Constants.DEFAULT_CONNECTION_TIMEOUT),
-                        Values.getInteger(application.getProperty(PropertyName.READ_TIMEOUT), Constants.DEFAULT_READ_TIMEOUT));
+                FileUtils.copyURLToFile(fileUrl, file, Values.getInt(application.getProperty(PropertyName.CONNECTION_TIMEOUT), Constants.DEFAULT_CONNECTION_TIMEOUT),
+                        Values.getInt(application.getProperty(PropertyName.READ_TIMEOUT), Constants.DEFAULT_READ_TIMEOUT));
             }
         }
     }
@@ -83,6 +83,16 @@ public final class LoaderUtils {
         }
 
         return new File(path).exists();
+    }
+    
+    /**
+     * 是否是jar文件
+     * 
+     * @param url
+     * @return
+     */
+    public static boolean isJarURL(URL url) {
+        return url.toString().toLowerCase().endsWith(Constants.ENTRY_SUFFIEX);
     }
 
     /**

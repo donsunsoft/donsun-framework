@@ -14,7 +14,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import org.apache.log4j.Logger;
-import org.springframework.util.ResourceUtils;
 
 /**
  * 类加载工具
@@ -72,7 +71,7 @@ public class ClassLoaderUtils {
      * @param classLoader
      */
     public static void loadJarFile(URL url, ClassLoader classLoader) {
-        if (ResourceUtils.isJarURL(url)) {
+        if (LoaderUtils.isJarURL(url)) {
             try {
                 addURL.invoke(classLoader, new Object[] { url });
                 logger.debug(url.toString() + " loaded.");
