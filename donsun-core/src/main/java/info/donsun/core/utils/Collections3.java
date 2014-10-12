@@ -26,6 +26,26 @@ import org.apache.commons.lang3.StringUtils;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class Collections3 {
+    
+    /**
+     * 提取集合中的对象的一个属性(通过Getter函数), 和对象组合成Map.
+     * 
+     * @param collection 来源集合.
+     * @param keyPropertyName 要提取为Map中的Key值的属性名.
+     */
+
+    public static Map extractToMap(final Collection collection, final String keyPropertyName) {
+        Map map = new HashMap(collection.size());
+        try {
+            for (Object obj : collection) {
+                map.put(PropertyUtils.getProperty(obj, keyPropertyName), obj);
+            }
+        } catch (Exception e) {
+            throw Reflections.convertReflectionExceptionToUnchecked(e);
+        }
+
+        return map;
+    }
 
     /**
      * 提取集合中的对象的两个属性(通过Getter函数), 组合成Map.

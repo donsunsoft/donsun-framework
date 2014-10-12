@@ -3,6 +3,10 @@
  */
 package info.donsun.core.utils;
 
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+
 /**
  * 转换对象成需要的值
  * 
@@ -28,11 +32,7 @@ public final class Values {
      * @return 字符串
      */
     public static String getString(Object obj, String defaultValue) {
-        if (obj != null && obj.toString().length() > 0) {
-            return obj.toString().trim();
-        }
-        return defaultValue;
-
+        return ObjectUtils.toString(obj, defaultValue);
     }
 
     /**
@@ -53,16 +53,8 @@ public final class Values {
      * @return 布尔值
      */
     public static boolean getBoolean(Object obj, boolean defaultValue) {
-        if (obj != null) {
-            if (obj instanceof Boolean) {
-                return ((Boolean) obj).booleanValue();
-            } else {
-                String str = obj.toString().trim();
-                return "Y".equalsIgnoreCase(str) || "TRUE".equalsIgnoreCase(str) || "YES".equalsIgnoreCase(str)|| "1".equals(str);
-
-            }
-        }
-        return defaultValue;
+        Boolean bool = BooleanUtils.toBooleanObject(getString(obj));
+        return bool != null ? bool.booleanValue() : defaultValue;
     }
 
     /**
@@ -82,19 +74,8 @@ public final class Values {
      * @param defaultValue 默认值，当传入对象为null时返回默认值
      * @return 数字
      */
-    public static int getInteger(Object obj, int defaultValue) {
-        if (obj != null) {
-            if (obj instanceof Integer) {
-                return ((Integer) obj).intValue();
-            } else {
-                try {
-                    return Integer.parseInt(obj.toString().trim());
-                } catch (NumberFormatException e) {
-                    // do nothing.
-                }
-            }
-        }
-        return defaultValue;
+    public static int getInt(Object key, int defaultValue) {
+        return NumberUtils.toInt(getString(key), defaultValue);
     }
 
     /**
@@ -103,8 +84,8 @@ public final class Values {
      * @param obj 对象
      * @return 数字
      */
-    public static int getInteger(Object obj) {
-        return getInteger(obj, 0);
+    public static int getInt(Object obj) {
+        return getInt(obj, 0);
     }
 
     /**
@@ -115,18 +96,7 @@ public final class Values {
      * @return 长整型数字
      */
     public static long getLong(Object obj, long defaultValue) {
-        if (obj != null) {
-            if (obj instanceof Long) {
-                return ((Long) obj).longValue();
-            } else {
-                try {
-                    return Long.valueOf(obj.toString().trim());
-                } catch (NumberFormatException e) {
-                    // do nothing.
-                }
-            }
-        }
-        return defaultValue;
+        return NumberUtils.toLong(getString(obj), defaultValue);
     }
 
     /**
@@ -147,18 +117,7 @@ public final class Values {
      * @return 双精度型小数
      */
     public static double getDouble(Object obj, double defaultValue) {
-        if (obj != null) {
-            if (obj instanceof Double) {
-                return ((Double) obj).doubleValue();
-            } else {
-                try {
-                    return Double.valueOf(obj.toString().trim());
-                } catch (NumberFormatException e) {
-                    // do nothing.
-                }
-            }
-        }
-        return defaultValue;
+        return NumberUtils.toDouble(getString(obj), defaultValue);
     }
 
     /**
@@ -169,6 +128,27 @@ public final class Values {
      */
     public static double getDouble(Object obj) {
         return getDouble(obj, 0d);
+    }
+
+    /**
+     * 将对象转换成浮点型小数
+     * 
+     * @param obj 对象
+     * @param defaultValue 默认值，当传入对象为null时返回默认值
+     * @return 双精度型小数
+     */
+    public static float getFloat(Object obj, float defaultValue) {
+        return NumberUtils.toFloat(getString(obj), defaultValue);
+    }
+
+    /**
+     * 将对象转换成浮点型小数
+     * 
+     * @param obj 对象
+     * @return 双精度型小数
+     */
+    public static float getFloat(Object obj) {
+        return getFloat(obj, 0f);
     }
 
 }
